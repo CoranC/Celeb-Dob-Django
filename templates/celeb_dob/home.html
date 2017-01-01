@@ -1,0 +1,33 @@
+{% extends 'celeb_dob/base.html' %}
+
+{% block title %}Find A Celebrity!{% endblock %}
+
+{% block body_block %}
+	<div class="page-header">
+		<h1>Search A Celebrity</h1>
+		<p>
+			Type in the name of a celebrity and we will find their date of birth.
+			<br>
+			We will try to find other celebrities whose birthday falls
+			on that same date and month! Give it a whirl!
+		</p>
+	</div>
+	<div>
+		<form id="celeb_name_form" method="post" action="/get_celebrity/">
+
+			{% csrf_token %}
+			Celebrity Name: <input type="text" name="input_name" value="" size="50" />
+			{% for hidden in form.hidden_fields %}
+				{{ hidden }}
+			{% endfor %}
+			
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.help_text }}
+				{{ field }}
+			{% endfor %}
+			
+			<input type="submit" name="submit" value="Search Celebrity" />
+		</form>
+	</div>
+{% endblock %}

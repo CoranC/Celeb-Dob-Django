@@ -1,0 +1,53 @@
+{% extends 'celeb_dob/base.html' %}
+{% load staticfiles %}
+{% block title %}Celebrity Search{% endblock %}
+
+{% block body_block %}
+	{% if celebrities %}
+
+	<div class="page-header">
+		<h1>{{ celebrities.output_name}}</h1>
+	</div>
+	<div>
+			<p><a href="http://en.wikipedia.org/wiki/{{ celebrities.output_name }}" target="_blank">{{ celebrities.output_name }}</a>  was born on {{ celebrities.dob }} ({{ age }} Years Ago)</p>
+	</div>
+
+		{% if related_birthdays %}
+		<div>
+			<p>Other Noteable Figures with this Birthday:<p/>
+			{% for related_birthday in related_birthdays %}
+			<ul>
+				<li><a href="http://en.wikipedia.org/wiki/{{ related_birthday.output_name }}"  target="_blank">{{ related_birthday.output_name }}</a> - {{ related_birthday.dob }} </li>
+			</ul>
+			{% endfor %}
+		</div>
+		{% else %}
+
+		{% endif %}
+
+	{% else %}
+
+	<div class="page-header">
+		<h1>Couldn't find Celebrity</h1>
+	</div>
+	<div>
+		{% if random_number %}
+			<!--<img src="{% static "images/dontknow{{ random_number }}.jpg"%}" alt="Couldnt find them!" />-->
+			<img src="/static/{{ random_number }}" alt="Couldnt find them!" />
+		{% else %}
+			<P>:(</p>
+		{% endif %}
+	</div>
+
+	{% endif %}	
+
+	<div>
+		<br/>
+		<br/>
+		<br/>  
+		<form id="celeb_name_form" action="/home/">
+			<input type="submit" name="submit" value="Search Again!" />
+		</form>
+	</div>
+
+{% endblock %}
